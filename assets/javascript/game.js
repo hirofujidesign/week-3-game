@@ -1,7 +1,6 @@
-var wordsArray = ["monitor", "program", "application", "keyboard", "javascript", "gaming", "network"];
 var word;
 var goesLeft;
-var placeholder;
+var placeholder " ";
 var input;
 var wordLength;
 var wordSubstring;
@@ -12,109 +11,215 @@ var lives;
 var counter;
 var space;
 
-  function newGame()
-  {
-
-    placeholder = "";
-    goesLeft = 10;
-    word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
-    currentWord = 0;
-    word = wordsArray[currentWord];
-    wordLength = Word.length;
-    wordSubstring = currentWord.substring;
-    console.log(word);
-    var myElement = document.getElementById("button").innerHTML = "Click to guess";
-    var myPicElement = document.getElementById("hangimage").src = "http://fetlar.kingston.ac.uk/pp/hangman10.jpg";
-
-    for (var count = 0; count < word.length; count++)
-    {
-      placeholder = placeholder + "-";
-    }
-
-    document.getElementById("placeholder").innerHTML = placeholder;
-    document.getElementById("gamestatus").innerHTML = "Game running";
+  function storeGuess(){
+    g=document.getElementById("guess");
+    gs=g.elements["letter"].value;
+    gs=gs.toUpperCase();
+    checkguess(gs);
   }
 
-  function guessLetter()
-  {
-    var correct = 0;
+  var wordsArray = ["Harder, Better, Faster, Stronger", "Get Lucky", "One More Time", "Aerodynamic", "Digital Love","Crescendolls","Nightvision","Superheroes","Somthing About Us","Lose Yourself to Dance"];
 
-    var inputBox = document.getElementById("guessinput");
-    input = inputBox.value;
+songNum = Math.floor((Math.random() * (wordsArray.length)) + 0)
+song = wordsArray[songNum];
 
-
-    console.log(word);
-
-    for (var count = 0; count < wordLength; count++)
-    {
-      if (input == word.substring(count, count + 1))
-      {
-        correct++;
-        placeholder = placeholder.substring(0, count) + input + placeholder.substring(count + 1, placeholder.length + 1);
-        document.getElementById("placeholder").innerHTML = placeholder;
-      }
-    }
-
-    if (correct == 0)
-    {
-      goesLeft--;
-    }
-    var url = document.getElementById("hangimage").src = "http://fetlar.kingston.ac.uk/pp/hangman" + goesLeft + ".jpg";
-
-    if (placeholder == word)
-    {
-      document.getElementById("hangimage").src = "http://fetlar.kingston.ac.uk/pp/hangman_win.jpg";
-      alert("You guessed the word correctly. You win!");
-    }
-
-    if (goesLeft == 0)
-    {
-      alert("You lose");
-      newGame();
-    }
+wrongAnswers=0;
+currentguess =[];
+for (t=0;t < song.length; t++){
+  if(song[t]==" "){
+    currentguess.push("  ");
   }
-  //guesses list
-     result = function () {
-    wordHolder = document.getElementById('hold');
-    correct = document.createElement('ul');
-
-    for (var i = 0; i < word.length; i++) {
-      correct.setAttribute('id', 'my-word');
-      guess = document.createElement('li');
-      guess.setAttribute('class', 'guess');
-      if (word[i] === "-") {
-        guess.innerHTML = "-";
-        space = 1;
-      } else {
-        guess.innerHTML = "_";
-      }
-
-      guesses.push(guess);
-      wordHolder.appendChild(correct);
-      correct.appendChild(guess);
-    }
+  else {
+    currentguess.push("_");
   }
+}
 
-//lives
-   comments = function () {
-    showLives.innerHTML = "You have " + lives + " lives";
-    if (lives < 1) {
-      showLives.innerHTML = "Game Over";
-    }
-    for (var i = 0; i < geusses.length; i++) {
-      if (counter + space === geusses.length) {
-        showLives.innerHTML = "You Win!";
+document.querySelector('#current').innerHTML = currentguess.join(" ");
+
+function checkguess(gss) {
+  if (wrongAnswers > 8) {
+    lostgame();
+  }
+  if(song.indexOf(gss) > -1){
+    for(t=0;t < song.length;t++){
+      if (gss == song[t]) {
+        currentguess[t] = gss;
       }
     }
   }
 
-      // Animate man
-  var animate = function () {
-    var drawMe = lives ;
-    drawArray[drawMe]();
+  document.querySelector('#correctguess').innerHTML = "Good guess! Keep up the good work";
+
+  document.querySelector('#wrongguess').innerHTML = " ";
+
+  document.querySelector('#current').innerHTML = currentguess.join(" ");
+
+  if (currentguess.indexOf(" ") < 0) {
+    alert("Congradulations! Press Ok and turn up your music.")
   }
-newGame();
-document.getElementById("button").onclick = guessLetter;
+}
+
+else{
+  wrongAnswers++;
+    document.querySelector('#wrongguess').innerHTML = "Sorry, that's wrong. you have " +(10-wrongAnswers) + " guess(es) remaining";
+    document.querySelector('#correctguess').innerHTML = "";
+    document.querySelector('#current').innerHTML = currentguess.join("  ");
+  }
+}
+
+function wongame(music) {
+  switch (music) {
+    case 0: var aud = new Audio ("assets/media/Harder,_Better,_Faster,_Stronger.mp3");
+    aud.play();
+    break;
+
+    case 1: var aud = new Audio ("assets/media/Get_Lucky.mp3");
+    aud.play();
+    break;
+
+    case 2: var aud = new Audio ("assets/media/One_More_Time.mp3");
+    aud.play();
+    break;
+
+    case 3: var aud = new Audio ("assets/media/Aerodynamic.mp3");
+    aud.play();
+    break;
+
+    case 4: var aud = new Audio ("assets/media/Digital_Love.mp3");
+    aud.play();
+    break;
+
+    case 5: var aud = new Audio ("assets/media/Crescendolls.mp3");
+    aud.play();
+    break;
+
+    case 6: var aud = new Audio ("assets/media/Nightvision.mp3");
+    aud.play();
+    break;
+
+    case 7: var aud = new Audio ("assets/media/Superheroes.mp3");
+    aud.play();
+    break;
+
+    case 8: var aud = new Audio ("assets/media/Something_About_Us.mp3");
+    aud.play();
+    break;
+
+    case 9: var aud = new Audio ("assets/media/Lose_Yourself_to_Dance.mp3");
+    aud.play();
+    break;
+  }
+}
+
+function lostgame(){
+  var r =confirm("You lost! Try again");
+  if (r==true){
+    alert (song);
+  }
+  wrongAnswrs = 9;
+}
+
+//   function newGame()
+//   {
+//     goesLeft = 10;
+//     word = wordsArray[Math.floor(Math.random() * wordsArray.length)];
+//     currentWord = 0;
+//     word = wordsArray[currentWord];
+//     wordLength = Word.length;
+//     wordSubstring = currentWord.substring;
+//     console.log(word);
+//     var myElement = document.getElementById("button").innerHTML = "Click to guess";
+//     var myPicElement = document.getElementById("hangimage").src = "http://fetlar.kingston.ac.uk/pp/hangman10.jpg";
+
+//     for (var count = 0; count < word.length; count++)
+//     {
+//       placeholder = placeholder + "-";
+//     }
+
+//     document.getElementById("placeholder").innerHTML = placeholder;
+//     document.getElementById("gamestatus").innerHTML = "Game running";
+//   }
+
+//   function guessLetter()
+//   {
+//     var correct = 0;
+
+//     var inputBox = document.getElementById("guessinput");
+//     input = inputBox.value;
+
+
+//     console.log(word);
+
+//     for (var count = 0; count < wordLength; count++)
+//     {
+//       if (input == word.substring(count, count + 1))
+//       {
+//         correct++;
+//         placeholder = placeholder.substring(0, count) + input + placeholder.substring(count + 1, placeholder.length + 1);
+//         document.getElementById("placeholder").innerHTML = placeholder;
+//       }
+//     }
+
+//     if (correct == 0)
+//     {
+//       goesLeft--;
+//     }
+//     var url = document.getElementById("hangimage").src = "http://fetlar.kingston.ac.uk/pp/hangman" + goesLeft + ".jpg";
+
+//     if (placeholder == word)
+//     {
+//       document.getElementById("hangimage").src = "http://fetlar.kingston.ac.uk/pp/hangman_win.jpg";
+//       alert("You guessed the word correctly. You win!");
+//     }
+
+//     if (goesLeft == 0)
+//     {
+//       alert("You lose");
+//       newGame();
+//     }
+//   }
+//   //guesses list
+//      result = function () {
+//     wordHolder = document.getElementById('hold');
+//     correct = document.createElement('ul');
+
+//     for (var i = 0; i < word.length; i++) {
+//       correct.setAttribute('id', 'my-word');
+//       guess = document.createElement('li');
+//       guess.setAttribute('class', 'guess');
+//       if (word[i] === "-") {
+//         guess.innerHTML = "-";
+//         space = 1;
+//       } else {
+//         guess.innerHTML = "_";
+//       }
+
+//       guesses.push(guess);
+//       wordHolder.appendChild(correct);
+//       correct.appendChild(guess);
+//     }
+//   }
+
+// //lives
+//    comments = function () {
+//     showLives.innerHTML = "You have " + lives + " lives";
+//     if (lives < 1) {
+//       showLives.innerHTML = "Game Over";
+//     }
+//     for (var i = 0; i < geusses.length; i++) {
+//       if (counter + space === geusses.length) {
+//         showLives.innerHTML = "You Win!";
+//       }
+//     }
+//   }
+
+//       // Animate man
+//   var animate = function () {
+//     var drawMe = lives ;
+//     drawArray[drawMe]();
+//   }
+// newGame();
+// document.getElementById("button").onclick = guessLetter;
 
 
     // var words = ["giraffe", "cat","eagle","pepsi","gladiator","Finding Nemo","Lakers","terminator"];
